@@ -1,3 +1,4 @@
+import 'package:EmmaLiefert/customer/pages/order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
@@ -18,10 +19,10 @@ class HomePage extends StatelessWidget {
         builder: (ctx) => Container(
             child: GestureDetector(
           onTap: () {
-            _scaffoldKey.currentState.showSnackBar(SnackBar(
-              content: Text('Tapped on green FlutterLogo Marker'),
-              
-            ));
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => OrderPage()),
+            );
           },
           child: Image(image: AssetImage('images/store.png'))
         )),
