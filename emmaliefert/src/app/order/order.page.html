@@ -34,7 +34,7 @@
 
     <ion-item>
       <ion-avatar item-start>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Kaisersemmel-.jpg">
+        <img src="{{item.link}}">
       </ion-avatar>
       <h2>&nbsp; 
         &nbsp; 
@@ -70,7 +70,7 @@
        <ion-col size="8">
         <h1> &nbsp; Zwischensumme:</h1>
        </ion-col>
-       <ion-col size="2">
+       <ion-col size="4">
         <h1> &nbsp; {{finalPrice | number:'.2-2':'en-DE'}}</h1>
        </ion-col>
       </ion-row>

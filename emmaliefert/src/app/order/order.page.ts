@@ -18,6 +18,14 @@ export class OrderPage implements OnInit{
       "title":"Kaisersemmel",
       "description":"Unser Klassiker, das Kaiserbrötchen. Macht sich immer gut entweder mit Nutella oder Marmelade.",
       "price":0.29,
+      "link": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Kaisersemmel-.jpg",
+      "amount": 0 
+    },
+    {
+      "title":"Laugenbrötchen",
+      "description":"Lecker,lecker,lecker.. Das Laugenbrötchen",
+      "price":0.49,
+      "link": "assets/images/laugenbroetchen.png",
       "amount": 0
     }
   ]
