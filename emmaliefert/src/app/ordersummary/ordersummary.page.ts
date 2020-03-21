@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
+import { NavController, Platform } from "@ionic/angular";
 
 @Component({
   selector: 'app-ordersummary',
@@ -9,9 +10,9 @@ import { Router } from '@angular/router';
 })
 export class OrdersummaryPage implements OnInit {
 
-  constructor(public storage: Storage, public router: Router) { }
+  constructor(public navCtrl: NavController, public storage: Storage, public router: Router) { }
 
-  station = {}
+  station = {} 
   price = 0
   products = []
 
@@ -46,6 +47,6 @@ export class OrdersummaryPage implements OnInit {
 }
 
 pay() {
-  this.router.navigateByUrl('/trackorder');
+  this.navCtrl.navigateForward(['successmodal']);
 }
 }

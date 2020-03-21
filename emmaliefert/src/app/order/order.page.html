@@ -49,15 +49,15 @@
       <ion-col>
         <ion-grid>
           <ion-row>
-            <ion-col size="8" class="price">
+            <ion-col size="9" class="price">
               <div>
                {{item.price | number:'.2-2':'en-DE'}} €
               </div>
             </ion-col>
-            <ion-col size="2" class="amount">
-              <ion-icon name="remove-circle-outline" (click) = "decrease(item)" size="medium"></ion-icon>
+            <ion-col size="3" class="amount">
+              <ion-icon name="remove-circle-outline" color="primary" (click) = "decrease(item)" size="medium"></ion-icon>
               {{item.amount}}
-              <ion-icon name="add-circle-outline" (click) = "increase(item)" size="medium"></ion-icon>
+              <ion-icon name="add-circle-outline" color="primary" (click) = "increase(item)" size="medium"></ion-icon>
             </ion-col>
           </ion-row>
         </ion-grid>

@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'trackorder',
     loadChildren: () => import('./trackorder/trackorder.module').then( m => m.TrackorderPageModule)
   },
+  {
+    path: 'successmodal',
+    loadChildren: () => import('./successmodal/successmodal.module').then( m => m.SuccessmodalPageModule)
+  },
 ];
 
 @NgModule({
