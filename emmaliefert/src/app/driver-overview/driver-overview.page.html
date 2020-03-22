@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/order"></ion-back-button>
+    </ion-buttons> 
+    <ion-title>Bestell&uuml;bersicht für deine Tour bei {{station.title}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>  
+  <ion-card *ngFor="let order of orders">
+    <h3 style="padding-left:1em">Bestellung {{order.orderId}}</h3>
+    <ion-list name="order.orderId">
+      <ion-item *ngFor="let item of order['products']">        
+        <ion-avatar slot="start">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Kaisersemmel-.jpg">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{item.title}}</h2>
+          <h3>{{item.price}}</h3>
+          <p class="ion-text-wrap">{{item.description}}</p>
+          <h2>Anzahl: {{item.amount}}</h2>        
+        </ion-label>
+        <h3 item-right>{{amountTimesPrice(item.amount,item.price) | number:'.2-2':'en-DE'}} €</h3>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-item>      
+        <ion-label>
+          <h1>Gesamtkosten:</h1>
+        </ion-label>
+        <h2 slot="end">{{order.total | number:'.2-2':'en-DE'}} €</h2>      
+      </ion-item>
+    </ion-list>
+    <ion-button (click) ="presentAlertConfirm(order.orderId)"  expand="block">Bestellung bereit</ion-button>
+  </ion-card>
+</ion-content>
+

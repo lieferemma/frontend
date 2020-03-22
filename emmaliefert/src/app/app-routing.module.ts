@@ -19,6 +19,18 @@ const routes: Routes = [
     path: 'successmodal',
     loadChildren: () => import('./successmodal/successmodal.module').then( m => m.SuccessmodalPageModule)
   },
+  {
+    path: 'overview',
+    loadChildren: () => import('./driver/overview/overview.module').then( m => m.OverviewPageModule)
+  },
+  {
+    path: 'driver-overview',
+    loadChildren: () => import('./driver-overview/driver-overview.module').then( m => m.DriverOverviewPageModule)
+  },
+  {
+    path: 'driver-overview',
+    loadChildren: () => import('./driver-overview/driver-overview.module').then( m => m.DriverOverviewPageModule)
+  },
 ];
 
 @NgModule({
