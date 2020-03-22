@@ -40,14 +40,14 @@ export class DriverOverviewPage implements OnInit {
     delivery_points: [{
         "uuid":"dsaffasd",
         "position": {
-          longitude: 42.43,
-          latitude: 212.3
+          latitude: 48.7859251,
+          longitude: 9.1928313
         },
         "scheduled_time": "05:30",
-        "parking_time": "0:30",
+        "parking_time": "06:00",
         orders: [
           {
-            "orderId": 1,
+            "orderId": "LS3AJ1",
             "visible": true,
             customer: {
               "name": "Emma Schmidt",
@@ -60,21 +60,22 @@ export class DriverOverviewPage implements OnInit {
                 "description":"Unser Klassiker, das Kaiserbrötchen. Macht sich immer gut entweder mit Nutella oder Marmelade.",
                 "price":0.29,
                 "link": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Kaisersemmel-.jpg",
-                "amount": 2 
+                "amount": 1 
               },
               {
                 "title":"Laugenbrötchen",
                 "description":"Lecker,lecker,lecker.. Das Laugenbrötchen",
                 "price":0.49,
                 "link": "assets/images/laugenbroetchen.png",
-                "amount": 2
+                "amount": 6
               }
             ],
-            "total": 1.56
+            "total": 6.13
       
           },
+          
           {
-            "orderId": 2,
+            "orderId": "KQ1OL2",
             "visible": true,
             customer: {
               "name": "Heide Schmidt",
@@ -106,14 +107,14 @@ export class DriverOverviewPage implements OnInit {
       {
         "uuid":"4p32j443232okpjp34",
         "position": {
-          longitude: 43.43,
-          latitude: 232.3
+          latitude: 48.755845,
+          longitude: 9.162932
         },
         "scheduled_time": "07:30",
-        "parking_time": "0:30",
+        "parking_time": "08:00",
         orders: [
           {
-            "orderId": 3,
+            "orderId": "A52OLR",
             "visible": true,
             customer: {
               "name": "Peter Schmidt",
@@ -140,7 +141,7 @@ export class DriverOverviewPage implements OnInit {
       
           },
           {
-            "orderId": 4,
+            "orderId": "OJ3BH4",
             "visible": true,
             customer: {
               "name": "Hans Schmidt",

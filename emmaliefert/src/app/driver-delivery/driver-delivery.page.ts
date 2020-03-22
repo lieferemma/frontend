@@ -15,20 +15,21 @@ export class DriverDeliveryPage implements OnInit {
       "title": "Bäckerei Maier"
     }
 
+    
   price = 0;
   route = { 
     "route_uuid":"32131esajapdjpsjfea",
     delivery_points: [{
         "uuid":"dsaffasd",
         "position": {
-          latitude: 48.785845,
-          longitude: 9.192932
+          latitude: 48.7859251,
+          longitude: 9.1928313
         },
         "scheduled_time": "05:30",
         "parking_time": "06:00",
         orders: [
           {
-            "orderId": 1,
+            "orderId": "LS3AJ1",
             "visible": true,
             customer: {
               "name": "Emma Schmidt",
@@ -41,21 +42,21 @@ export class DriverDeliveryPage implements OnInit {
                 "description":"Unser Klassiker, das Kaiserbrötchen. Macht sich immer gut entweder mit Nutella oder Marmelade.",
                 "price":0.29,
                 "link": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Kaisersemmel-.jpg",
-                "amount": 2 
+                "amount": 11 
               },
               {
                 "title":"Laugenbrötchen",
                 "description":"Lecker,lecker,lecker.. Das Laugenbrötchen",
                 "price":0.49,
                 "link": "assets/images/laugenbroetchen.png",
-                "amount": 2
+                "amount": 6
               }
             ],
-            "total": 1.56
+            "total": 6.13
       
           },
           {
-            "orderId": 2,
+            "orderId": "KQ1OL2",
             "visible": true,
             customer: {
               "name": "Heide Schmidt",
@@ -94,7 +95,7 @@ export class DriverDeliveryPage implements OnInit {
         "parking_time": "08:00",
         orders: [
           {
-            "orderId": 3,
+            "orderId": "A52OLR",
             "visible": true,
             customer: {
               "name": "Peter Schmidt",
@@ -121,7 +122,7 @@ export class DriverDeliveryPage implements OnInit {
       
           },
           {
-            "orderId": 4,
+            "orderId": "OJ3BH4",
             "visible": true,
             customer: {
               "name": "Hans Schmidt",
@@ -213,6 +214,7 @@ export class DriverDeliveryPage implements OnInit {
   
   items = [];
   deliverypoint = 0;
+
   amountTimesPrice(amount,price) {
     return Number(amount)*Number(price);
   }
@@ -350,6 +352,7 @@ export class DriverDeliveryPage implements OnInit {
   }
 
   nextTour() {
+
     var lat = this.lastTourCheck() ? this.station.position.lat : this.route.delivery_points[this.deliverypoint+1].position.latitude;
     var lon = this.lastTourCheck() ? this.station.position.lgn : this.route.delivery_points[this.deliverypoint+1].position.longitude;
     
@@ -360,7 +363,7 @@ export class DriverDeliveryPage implements OnInit {
     window.open("maps://maps.google.com/maps?daddr="+lat+","+lon+"&amp;ll=");
 
      }
-     
+
     else /* else use Google */
     window.open("https://maps.google.com/maps?daddr="+lat+","+lon+"&amp;ll=");
   }

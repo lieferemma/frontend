@@ -1,0 +1,21 @@
+<ion-header>  
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/order"></ion-back-button>
+    </ion-buttons> 
+    <ion-title>Fahrermodus
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="fastanimation animated fadeInRight fast_delay-1500">
+    <ion-card-header>
+      <ion-card-title>Dein Shopcode</ion-card-title>      
+    </ion-card-header>
+    <ion-card-content>
+      <ion-input type="text" mode="md" placeholder="Shopcode"></ion-input>
+      <ion-button expand="block" (click) ="goToTours()" >LOS GEHT'S!</ion-button>
+    </ion-card-content>
+  </ion-card>  
+</ion-content>

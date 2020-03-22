@@ -1,5 +1,11 @@
 <ion-content class="bg">
 
-  <img src="assets/images/logo.png" class="center" alt="">
+  <div>
+    <img src="assets/images/logo.png" class="fastanimation animated bounceInRight center fast_delay-500">
+  </div>
+
+  <ion-button class="welcome_btn fastanimation animated fadeInLeft fast_delay-500" (click)="open('/home')" expand="block" >ICH BIN KUNDE</ion-button>
+
+  <ion-button class="driver_btn fastanimation animated fadeInLeft fast_delay-1000" (click)="open('/shopcode')" expand="block" >ICH BIN FAHRER</ion-button>
 
 </ion-content>
