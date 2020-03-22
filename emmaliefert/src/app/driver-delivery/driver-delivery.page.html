@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/order"></ion-back-button>
+    </ion-buttons> 
+    <ion-title>Tour für {{station.title}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content> 
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Dein Abholpunkt</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img src="https://image.flaticon.com/icons/svg/235/235861.svg">
+        </ion-thumbnail>
+        <ion-label class="ion-text-wrap">Abholpunkt beim Sportplatz</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+          <ion-col size="5">
+            Startzeit:
+          </ion-col>
+          <ion-col size="5">
+            {{delivery.scheduled_time}} Uhr
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="5">
+            Abfahrtzeit:
+          </ion-col>
+          <ion-col size="5">
+            {{delivery.parking_time}} Uhr
+          </ion-col>
+        </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-searchbar placeholder="Bestellcode" show-cancel-button="focus"></ion-searchbar>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item-divider>
+    <ion-label>
+      Bestellungen vom Abholpunkt {{deliverypoint+1}}/{{route.delivery_points.length}}
+    </ion-label>
+  </ion-item-divider>
+
+  <ion-card *ngFor="let order of orders; let i = index" id="{{i}}" class="fastanimation animated fadeInRight fast_delay-{{fast_delay(i)}}">
+    <h3 style="padding-left:1em">Bestellung {{order.orderId}}</h3>
+    <ion-list >
+      <ion-item *ngFor="let item of order['products']">        
+        <ion-avatar slot="start">
+          <img src="{{item.link}}">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{item.title}}</h2>
+          <h3>{{item.price}}</h3>
+          <p class="ion-text-wrap">{{item.description}}</p>
+          <h2>Anzahl: {{item.amount}}</h2>        
+        </ion-label>
+        <h3 item-right>{{amountTimesPrice(item.amount,item.price) | number:'.2-2':'en-DE'}} €</h3>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-item>      
+        <ion-label>
+          <h1>Gesamtkosten:</h1>
+        </ion-label>
+        <h2 slot="end">{{order.total | number:'.2-2':'en-DE'}} €</h2>      
+      </ion-item>
+    </ion-list>
+    <ion-button (click) ="presentAlertConfirm(i, order.orderId)" expand="block">BESTELLUNG AUSGELIEFERT</ion-button>
+  </ion-card>
+
+    <ion-card class="fastanimation animated fadeInRight fast_delay-1500">
+      <ion-card-header>
+        <ion-card-title>Alles abgeholt?</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button expand="block" (click) ="continueTour()" >{{lastTourCheck() ? "ZURÜCK ZUM LADEN" : "WEITER GEHT'S!"}}</ion-button>
+      </ion-card-content>
+    </ion-card>  
+</ion-content>
+

@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/home"></ion-back-button>
+    </ion-buttons> 
+    <ion-title>Bestellen bei {{station.title}}</ion-title>
+  </ion-toolbar>  
+  <ion-toolbar>
+    <ion-searchbar placeholder="Suchen"></ion-searchbar>    
+  </ion-toolbar>
+  
+</ion-header>
+
+<script>
+  const searchbar = document.querySelector('ion-searchbar');
+  const items = Array.from(document.querySelector('ion-card').children);
+
+  searchbar.addEventListener('ionInput', handleInput);
+
+  function handleInput(event) {
+    const query = event.target.value.toLowerCase();
+    requestAnimationFrame(() => {
+      items.forEach(item => {
+        const shouldShow = item.cardContent.textContent.toLowerCase().indexOf(query) > -1;
+        item.style.display = shouldShow ? 'block' : 'none';
+      });
+    });
+  }
+</script>
+
+<ion-content>  
+  <ion-item-divider>
+    <ion-label>
+      Backwaren
+    </ion-label>
+  </ion-item-divider>
+  <ion-card *ngFor="let item of products; let i = index" class="fastanimation animated fadeInRight fast_delay-{{fast_delay(i)}}">
+
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="{{item.link}}">
+      </ion-avatar>
+      <h2>&nbsp; 
+        &nbsp; 
+        {{item.title}}</h2>
+    </ion-item>
+    
+    <ion-card-content>
+      <p>{{item.description}}</p>
+    </ion-card-content>
+   
+    <ion-row class="cardfooter">
+      <ion-col>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="8" class="price">
+              <div>
+               {{item.price | number:'.2-2':'en-DE'}} €
+              </div>
+            </ion-col>
+            <ion-col size="4" class="amount">
+              <div class="updown">
+              <ion-icon name="remove-circle-outline" color="primary" (click) = "decrease(item)" size="medium"></ion-icon>
+                {{item.amount}}
+              <ion-icon name="add-circle-outline" color="primary" (click) = "increase(item)" size="medium"></ion-icon>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-card> 
+  <ion-card class="fastanimation animated fadeInRight fast_delay-1500">
+    <ion-grid>
+      <ion-row>
+       <ion-col size="8">
+        <h1> &nbsp; Zwischensumme:</h1>
+       </ion-col>
+       <ion-col size="4">
+        <h1> &nbsp; {{finalPrice | number:'.2-2':'en-DE'}} €</h1>
+       </ion-col>
+      </ion-row>
+    </ion-grid>
+  
+  </ion-card>
+
+  <ion-button class="fastanimation animated fadeInRight delay-2s" (click) ="checkout()"  expand="block">Bestellung abschließen</ion-button>
+</ion-content>

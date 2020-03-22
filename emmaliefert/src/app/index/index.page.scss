@@ -1,0 +1,48 @@
+.bg{
+    --background: linear-gradient(197deg, rgba(24, 188, 156, 1) 0%, rgba(45, 62, 80, 1) 100%) !important;
+  }
+
+.white {
+    color: white;
+}
+
+
+ion-content {
+    div {
+      margin-top:0%;
+      height: 60%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      float: top;
+    }
+   }
+
+   .fastanimation {
+    animation-duration: 0.8s;
+}
+
+.fast_delay-500 {
+    animation-delay: 0.5s;
+}
+
+.fast_delay-1000 {
+    animation-delay: 1.0s;
+}
+
+.fast_delay-1500 {
+    animation-delay: 1.5s;
+}
+
+.welcome_btn {
+    margin: 5%;
+    height: 10%;
+    color: black;
+}
+
+.driver_btn {
+    margin: 5%;
+    height: 10%;
+    color: black;
+}
