@@ -177,7 +177,7 @@ export class DriverOverviewPage implements OnInit {
   
   orders = [
     {
-      "orderId": 1,
+      "orderId": "1",
       "visible": true,
       customer: {
         "name": "Emma Schmidt",
@@ -204,7 +204,7 @@ export class DriverOverviewPage implements OnInit {
 
     },
     {
-      "orderId": 2,
+      "orderId": "2",
       "visible": true,
       customer: {
         "name": "Heide Schmidt",

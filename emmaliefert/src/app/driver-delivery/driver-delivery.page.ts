@@ -154,7 +154,9 @@ export class DriverDeliveryPage implements OnInit {
     ],
     route_points: []
   }
-  delivery = [];
+  delivery = {
+    orders: []
+  }
   orders = [
     {
       "orderId": 1,
@@ -236,7 +238,7 @@ export class DriverDeliveryPage implements OnInit {
     const searchbar = document.querySelector('ion-searchbar');
     
     searchbar.addEventListener('ionInput', (event => {
-      const query = event.target.value.toLowerCase();
+      const query = (event.target as HTMLTextAreaElement).value.toLowerCase();
       requestAnimationFrame(() => {
         let i = 0;        
         this.items.forEach(item => {

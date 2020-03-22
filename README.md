@@ -24,12 +24,14 @@ The following chart shows the customer journey of the driver role.
 
 ## Develop / Contribute
 
-To continue developing on the app, please download and install [Ionic](https://ionicframework.com).
-
-To deploy locally, go to the root directory of the app and run:
-
+The project uses Docker for deployment. So you can simply run: 
+```bash
+docker build -t lieferemma:dev . && docker run -p 8100:8100 -p 35729:35729 lieferemma:dev
 ```
+
+If you prefer, running it without Docker, you have to install ionic and then run: 
+```bash
 ionic serve 
 ```
 
-You can check out the app on `localhost:8100`
+You can check out the app on `localhost:80`
