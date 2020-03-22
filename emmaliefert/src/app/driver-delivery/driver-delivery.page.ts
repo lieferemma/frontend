@@ -1,31 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
-  selector: 'app-driver-overview',
-  templateUrl: './driver-overview.page.html',
-  styleUrls: ['./driver-overview.page.scss'],
-  animations: [
-    trigger('items', [
-      transition(':enter', [
-        style({ transform: 'scale(0.5)', opacity: 0 }),  // initial
-        animate('0.6s cubic-bezier(.4, -0.6, 0.2, 1.5)', 
-          style({ transform: 'scale(1)', opacity: 1 }))  // final
-      ]),
-      transition(':leave', [
-        style({ transform: 'translateY(-10in)', opacity: 0, height: '*' }),
-        animate('0.4s cubic-bezier(.4, -0.6, 0.2, 0.6)', 
-         style({ 
-           transform: 'scale(0.5)', opacity: 0, 
-           height: '0px', margin: '0px' 
-         })) 
-      ])
-    ])
-  ]
+  selector: 'app-driver-delivery',
+  templateUrl: './driver-delivery.page.html',
+  styleUrls: ['./driver-delivery.page.scss'],
 })
-export class DriverOverviewPage implements OnInit {
+export class DriverDeliveryPage implements OnInit {
 
-  constructor() { }
   station =  {
       "position": {
         "lat": 48.775845,
@@ -40,11 +21,11 @@ export class DriverOverviewPage implements OnInit {
     delivery_points: [{
         "uuid":"dsaffasd",
         "position": {
-          longitude: 42.43,
-          latitude: 212.3
+          latitude: 48.785845,
+          longitude: 9.192932
         },
         "scheduled_time": "05:30",
-        "parking_time": "0:30",
+        "parking_time": "06:00",
         orders: [
           {
             "orderId": 1,
@@ -106,11 +87,11 @@ export class DriverOverviewPage implements OnInit {
       {
         "uuid":"4p32j443232okpjp34",
         "position": {
-          longitude: 43.43,
-          latitude: 232.3
+          latitude: 48.755845,
+          longitude: 9.162932
         },
         "scheduled_time": "07:30",
-        "parking_time": "0:30",
+        "parking_time": "08:00",
         orders: [
           {
             "orderId": 3,
@@ -172,7 +153,7 @@ export class DriverOverviewPage implements OnInit {
     ],
     route_points: []
   }
-  
+  delivery = [];
   orders = [
     {
       "orderId": 1,
@@ -229,40 +210,65 @@ export class DriverOverviewPage implements OnInit {
 
     }
   ]
-
+  
+  items = [];
+  deliverypoint = 0;
   amountTimesPrice(amount,price) {
     return Number(amount)*Number(price);
   }
 
   ngOnInit() {
 
-    //combineorders
+    
+    // get orders from deliverypoint with index above (e.g. form some function)
     this.orders = [];
-    this.route.delivery_points.forEach(delivery => {
-      delivery.orders.forEach(order =>{
-        this.orders.push(order);
-      })
-      }
-    )
+    this.delivery = this.route.delivery_points[this.deliverypoint];
 
+    console.log(this.delivery);
+    
+    this.delivery.orders.forEach(order =>{
+        this.orders.push(order);
+        this.items.push(order.orderId);
+    })
+  
+    const searchbar = document.querySelector('ion-searchbar');
+    
+    searchbar.addEventListener('ionInput', (event => {
+      const query = event.target.value.toLowerCase();
+      requestAnimationFrame(() => {
+        let i = 0;        
+        this.items.forEach(item => {
+          const shouldShow = item.toString().toLowerCase().indexOf(query) > -1;
+          if (this.orders[i].visible) {
+            document.getElementById(i.toString()).style.display = shouldShow ? 'block' : 'none';
+          }
+          i++;
+        });
+      });
+    })
+    );
   }
 
   presentAlertConfirm(orderIndex, orderName) {
     const alert = document.createElement('ion-alert');
-    alert.header = 'Bestellung ' + orderName + ' eingeladen?';
+    alert.header = 'Bestellung ' + orderName + ' abgeholt?';
     alert.message = 'Bitte bestätigen.';
     alert.buttons = [
       {
         text: 'Nein',
         role: 'cancel',
         cssClass: 'secondary',
-        handler: (blah) => {
-          console.log('Confirm Cancel: blah');
+        handler: () => {
+          console.log('Confirm Cancel:');
         }
       }, {
         text: 'Ja',
         handler: () => {
           //delete this.orders[orderIndex]
+          //this.orders[orderIndex].visible = false;
+          //document.getElementById(orderIndex).isDisplayed()).toBe(false);
+          //document.getElementById(orderIndex).style.display = "none";
+          //console.log('Confirm Okay')
 
           document.getElementById(orderIndex).classList.remove("fadeInRight");
           document.getElementById(orderIndex).classList.remove("fast_delay-500")
@@ -281,9 +287,15 @@ export class DriverOverviewPage implements OnInit {
         }
       }
     ];
+
+    
   
     document.body.appendChild(alert);
     return alert.present();
+  }
+
+  fast_delay(index)  {
+    return (500+Number(index) * 500);
   }
 
   ordersInvisible(orders){
@@ -297,20 +309,66 @@ export class DriverOverviewPage implements OnInit {
     return returnbool;
 
   }
-  startTour() {
+  
+  continueTour(orders) {
+    if (this.ordersInvisible(orders)) {
+      this.nextTour(); 
+    } else {
+      document.querySelector('ion-searchbar').value = "";
+
+      let i = 0;
+      this.orders.forEach(order => {        
+        if (order.visible) {
+          document.getElementById(i.toString()).style.display = 'block';
+        }
+        i++;
+      });
+      const alert = document.createElement('ion-alert');
+      alert.header = 'Offene Bestellungen';
+      alert.message = 'Es wurde nicht alles abgeholt, bist du dir sicher?';
+      alert.buttons = [
+        {
+          text: 'Nein',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel:');
+          }
+        }, {
+          text: 'Ja',
+          handler: () => {
+            this.nextTour(); 
+          }
+        }
+      ];
+    
+      document.body.appendChild(alert);
+      return alert.present();
+    }
+    
+    
+  }
+
+  nextTour() {
+    var lat = this.lastTourCheck() ? this.station.position.lat : this.route.delivery_points[this.deliverypoint+1].position.latitude;
+    var lon = this.lastTourCheck() ? this.station.position.lon : this.route.delivery_points[this.deliverypoint+1].position.longitude;
+    
     // intent to start gmaps;
     if  ((navigator.platform.indexOf("iPhone") != -1) || 
      (navigator.platform.indexOf("iPad") != -1) || 
      (navigator.platform.indexOf("iPod") != -1)) {
-    window.open("maps://maps.google.com/maps?daddr="+this.route.delivery_points[0].position.latitude+","+this.route.delivery_points[0].position.longitude+"&amp;ll=");
+    window.open("maps://maps.google.com/maps?daddr="+lat+","+lon+"&amp;ll=");
 
      }
     else /* else use Google */
-    window.open("https://maps.google.com/maps?daddr="+this.route.delivery_points[0].position.latitude+","+this.route.delivery_points[0].position.longitude+"&amp;ll=");
+    window.open("https://maps.google.com/maps?daddr="+lat+","+lon+"&amp;ll=");
   }
 
-  fast_delay(index)  {
-    return (500+Number(index) * 500);
+  lastTourCheck(){
+    if ((this.deliverypoint +1) == this.route.delivery_points.length) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
-

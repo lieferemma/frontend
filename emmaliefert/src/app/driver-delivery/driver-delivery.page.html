@@ -10,14 +10,14 @@
 <ion-content> 
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Deine Routenübersicht</ion-card-title>
+      <ion-card-title>Dein Abholpunkt</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item>
         <ion-thumbnail slot="start">
           <img src="https://image.flaticon.com/icons/svg/235/235861.svg">
         </ion-thumbnail>
-        <ion-label>Der frühe Vogel fängt dem Wurm</ion-label>
+        <ion-label>Abholpunkt beim Sportplatz</ion-label>
       </ion-item>
       <ion-item>
         <ion-grid>
@@ -26,30 +26,30 @@
             Startzeit:
           </ion-col>
           <ion-col size="5">
-            05:00 Uhr
+            {{delivery.scheduled_time}} Uhr
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="5">
-            Abolpunkte:
+            Abfahrtzeit:
           </ion-col>
           <ion-col size="5">
-            2
+            {{delivery.parking_time}} Uhr
           </ion-col>
         </ion-row>
         </ion-grid>
       </ion-item>
-      <!--  <ion-searchbar show-cancel-button="focus"></ion-searchbar> -->
+      <ion-searchbar show-cancel-button="focus"></ion-searchbar>
     </ion-card-content>
   </ion-card>
 
-  <!-- <ion-item-divider>
+  <ion-item-divider>
     <ion-label>
-      Abholpunkt 1
+      Bestellungen vom Abholpunkt {{deliverypoint+1}}/{{route.delivery_points.length}}
     </ion-label>
-  </ion-item-divider> -->
+  </ion-item-divider>
 
-  <ion-card *ngFor="let order of orders; let i = index" id="{{i}}" class="fastanimation animated fadeInRight fast_delay-{{fast_delay(i)}}">
+  <ion-card *ngFor="let order of orders; let i = index" id="{{i}}" class="fastanimation animated fadeInRight fast_delay-{{fast_delay(i)}}s">
     <h3 style="padding-left:1em">Bestellung {{order.orderId}}</h3>
     <ion-list >
       <ion-item *ngFor="let item of order['products']">        
@@ -73,15 +73,23 @@
         <h2 slot="end">{{order.total | number:'.2-2':'en-DE'}} €</h2>      
       </ion-item>
     </ion-list>
-    <ion-button (click) ="presentAlertConfirm(i, order.orderId)"  color="primary" expand="block">Bestellung eingepackt</ion-button>
+    <ion-button (click) ="presentAlertConfirm(i, order.orderId)" expand="block">Bestellung ausgelifert</ion-button>
   </ion-card>
 
-    <ion-card *ngIf="ordersInvisible(orders)" class="fastanimation animated fadeInUp">
+    <ion-card *ngIf="!lastTourCheck()" class="animated fadeInRight delay-{{ i }}s">
       <ion-card-header>
-        <ion-card-title>Alle Bestellungen eingepackt</ion-card-title>
+        <ion-card-title>Alle Bestellungen abgeholt</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <ion-button color="primary" expand="block" (click) ="startTour()" >Alles drin, los gehts</ion-button>
+        <ion-button expand="block" (click) ="continueTour()" >Alles weg, weiter gehts</ion-button>
+      </ion-card-content>
+    </ion-card>
+    <ion-card *ngIf="lastTourCheck()" class="animated fadeInRight delay-{{ i }}s">
+      <ion-card-header>
+        <ion-card-title>Alle Bestelleungen abgeholt</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button expand="block" (click) ="continueTour()" >Zurück zum Laden</ion-button>
       </ion-card-content>
     </ion-card>
 </ion-content>

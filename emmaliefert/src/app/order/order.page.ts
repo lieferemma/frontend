@@ -62,4 +62,7 @@ export class OrderPage implements OnInit{
     this.router.navigateByUrl('/ordersummary');
   }
 
+  fast_delay(index)  {
+    return (500+Number(index) * 500);
+  }
 }

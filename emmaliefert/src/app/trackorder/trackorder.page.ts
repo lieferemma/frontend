@@ -48,6 +48,7 @@ export class TrackorderPage{
         "title": "Deine Emma"
       }      
     ]
+    
     var midlat = (driver[0].position.lat + stations[0].position.lat)/2;
     var midlgn = (driver[0].position.lgn + stations[0].position.lgn)/2;
     const map = new Map('emmamap').setView([midlat, midlgn], 13);
@@ -68,17 +69,20 @@ export class TrackorderPage{
       popupAnchor: [0, -20]
     });
 
+    driver.forEach((station) => {
+      marker([station.position.lat, station.position.lgn], {icon: driverIcon})
+      .bindPopup(`<b>${station.title}</b><br>Stationen: 3<hr><button>Fahrplan anschauen</button>`, { autoClose: false })
+      .addTo(map).openPopup();
+      
+    });
+
     stations.forEach((station) => {
       marker([station.position.lat, station.position.lgn], {icon: customMarkerIcon})
-      .bindPopup(`<b>${station.title}</b>`, { autoClose: false })
+      .bindPopup(`<b>${station.title}</b><hr>Zeit: 19:00 Uhr<br>Abholcode: #472692`, { autoClose: false })
       .addTo(map).openPopup();
     });
 
-    driver.forEach((station) => {
-      marker([station.position.lat, station.position.lgn], {icon: driverIcon})
-      .bindPopup(`<b>${station.title}</b>`, { autoClose: false })
-      .addTo(map).openPopup();
-    });
+    
 
   }
 

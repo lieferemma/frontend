@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Deine Routen</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card *ngFor="let route of routes; let i = index" class="animated fastanimation fadeInRight fast_delay-{{fast_delay(i)}}">
+    <ion-card-header>
+      <ion-card-title>{{route.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img src="https://image.flaticon.com/icons/svg/235/235861.svg">
+        </ion-thumbnail>
+        <ion-label>{{route.label}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+          <ion-col size="5">
+            Startzeit:
+          </ion-col>
+          <ion-col size="5">
+            {{route.start_time}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="5">
+            Abolpunkte:
+          </ion-col>
+          <ion-col size="5">
+            {{route.drop_off_points}}
+          </ion-col>
+        </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+      <ion-button (click)= "startTour()" expand="block" color="primary" shape="rounded" >Route anschauen</ion-button>
+  </ion-card>
+  
+</ion-content>

@@ -29,8 +29,12 @@
 </script>
 
 <ion-content>  
-
-  <ion-card *ngFor="let item of products">
+  <ion-item-divider>
+    <ion-label>
+      Backwaren
+    </ion-label>
+  </ion-item-divider>
+  <ion-card *ngFor="let item of products; let i = index" class="fastanimation animated fadeInRight fast_delay-{{fast_delay(i)}}">
 
     <ion-item>
       <ion-avatar item-start>
@@ -64,7 +68,7 @@
       </ion-col>
     </ion-row>
   </ion-card> 
-  <ion-card>
+  <ion-card class="fastanimation animated fadeInRight fast_delay-1500">
     <ion-grid>
       <ion-row>
        <ion-col size="8">
@@ -78,5 +82,5 @@
   
   </ion-card>
 
-  <ion-button (click) ="checkout()"  expand="block">Bestellung abschließen</ion-button>
+  <ion-button class="fastanimation animated fadeInRight delay-2s" (click) ="checkout()"  expand="block">Bestellung abschließen</ion-button>
 </ion-content>
