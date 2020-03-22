@@ -21,3 +21,15 @@ The driver registers by entering his shop code into the client. After entering, 
 The following chart shows the customer journey of the driver role.
 
 ![Driver Journey](./res/driver_journey.png "Driver Journey")
+
+## Develop / Contribute
+
+To continue developing on the app, please download and install [Ionic](https://ionicframework.com).
+
+To deploy locally, go to the root directory of the app and run:
+
+```
+ionic serve 
+```
+
+You can check out the app on `localhost:8100`
