@@ -73,6 +73,7 @@ export class DriverOverviewPage implements OnInit {
             "total": 6.13
       
           },
+
           
           {
             "orderId": "KQ1OL2",
