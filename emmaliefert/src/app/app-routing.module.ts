@@ -35,6 +35,10 @@ const routes: Routes = [
     path: 'driver-delivery',
     loadChildren: () => import('./driver-delivery/driver-delivery.module').then( m => m.DriverDeliveryPageModule)
   },
+  {
+    path: 'index',
+    loadChildren: () => import('./index/index.module').then( m => m.IndexPageModule)
+  },
 ];
 
 @NgModule({

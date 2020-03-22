@@ -49,7 +49,7 @@
     </ion-label>
   </ion-item-divider>
 
-  <ion-card *ngFor="let order of orders; let i = index" id="{{i}}" class="fastanimation animated fadeInRight fast_delay-{{fast_delay(i)}}s">
+  <ion-card *ngFor="let order of orders; let i = index" id="{{i}}" class="fastanimation animated fadeInRight fast_delay-{{fast_delay(i)}}">
     <h3 style="padding-left:1em">Bestellung {{order.orderId}}</h3>
     <ion-list >
       <ion-item *ngFor="let item of order['products']">        
@@ -73,24 +73,16 @@
         <h2 slot="end">{{order.total | number:'.2-2':'en-DE'}} €</h2>      
       </ion-item>
     </ion-list>
-    <ion-button (click) ="presentAlertConfirm(i, order.orderId)" expand="block">Bestellung ausgelifert</ion-button>
+    <ion-button (click) ="presentAlertConfirm(i, order.orderId)" expand="block">BESTELLUNG AUSGELIEFERT</ion-button>
   </ion-card>
 
-    <ion-card *ngIf="!lastTourCheck()" class="animated fadeInRight delay-{{ i }}s">
+    <ion-card class="fastanimation animated fadeInRight fast_delay-1500">
       <ion-card-header>
         <ion-card-title>Alle Bestellungen abgeholt</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <ion-button expand="block" (click) ="continueTour()" >Alles weg, weiter gehts</ion-button>
+        <ion-button expand="block" (click) ="continueTour()" >{{lastTourCheck() ? "ZURÜCK ZUM LADEN" : "ALLES AUSGELIEFERT, WEITER!"}}</ion-button>
       </ion-card-content>
-    </ion-card>
-    <ion-card *ngIf="lastTourCheck()" class="animated fadeInRight delay-{{ i }}s">
-      <ion-card-header>
-        <ion-card-title>Alle Bestelleungen abgeholt</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-button expand="block" (click) ="continueTour()" >Zurück zum Laden</ion-button>
-      </ion-card-content>
-    </ion-card>
+    </ion-card>  
 </ion-content>
 

@@ -351,7 +351,7 @@ export class DriverDeliveryPage implements OnInit {
 
   nextTour() {
     var lat = this.lastTourCheck() ? this.station.position.lat : this.route.delivery_points[this.deliverypoint+1].position.latitude;
-    var lon = this.lastTourCheck() ? this.station.position.lon : this.route.delivery_points[this.deliverypoint+1].position.longitude;
+    var lon = this.lastTourCheck() ? this.station.position.lgn : this.route.delivery_points[this.deliverypoint+1].position.longitude;
     
     // intent to start gmaps;
     if  ((navigator.platform.indexOf("iPhone") != -1) || 
@@ -360,6 +360,7 @@ export class DriverDeliveryPage implements OnInit {
     window.open("maps://maps.google.com/maps?daddr="+lat+","+lon+"&amp;ll=");
 
      }
+     
     else /* else use Google */
     window.open("https://maps.google.com/maps?daddr="+lat+","+lon+"&amp;ll=");
   }
