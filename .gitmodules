@@ -1,6 +1,3 @@
-[submodule "emmaliefert/api"]
-	path = emmaliefert/api
-	url = git@github.com:lieferemma/api.git
-[submodule "emmaliefert/src/app/proto"]
-	path = emmaliefert/src/app/proto
+[submodule "lieferemma/src/app/proto"]
+	path = lieferemma/src/app/proto
 	url = git@github.com:lieferemma/api.git
