@@ -1,13 +1,4 @@
-FROM node:13.10-alpine
+FROM nginx:1.17.9-alpine
 
-RUN apk add --no-cache git
+COPY ./build/ /usr/share/nginx/html
 
-RUN npm install -g @ionic/cli cordova
-
-COPY ./emmaliefert/ /home/alpine/app/
-
-EXPOSE 8100
-
-WORKDIR /home/alpine/app/
-
-ENTRYPOINT [ "ionic","serve","--all" ]

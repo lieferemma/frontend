@@ -1,0 +1,21 @@
+FROM node:13.10-alpine
+
+RUN apk add --no-cache git
+
+RUN npm install -g @ionic/cli cordova
+
+COPY ./emmaliefert/ /home/alpine/app/
+
+WORKDIR /home/alpine/app/
+
+RUN ls -ahl
+RUN rm ./package-lock.json
+# Fix for bug with proposal-numeric-separator plugin
+RUN npm install npm-force-resolutions --save-dev
+RUN npm install
+RUN npx npm-force-resolutions
+RUN npm install
+RUN mkdir build
+COPY ./docker-entrypoint.sh /home/alpine/app/
+
+ENTRYPOINT ["/home/alpine/app/docker-entrypoint.sh"]

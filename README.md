@@ -24,14 +24,22 @@ The following chart shows the customer journey of the driver role.
 
 ## Develop / Contribute
 
-The project uses Docker for deployment. So you can simply run: 
+The project contains of two dockerfiles. One for building the app. The other for providing an image to deploy as static web app. 
+### Deploy with Docker
+
+1. Build app
 ```bash
-docker build -t lieferemma:dev . && docker run -p 8100:8100 -p 35729:35729 lieferemma:dev
+docker build -f Dockerfile_ionic -t emmaliefert_app:dev . && docker run -it -v ${PWD}/build:/home/alpine/app/build emmaliefert_app:dev
 ```
+2. Deploy locally
+```bash
+docker build -f Dockerfile -t emmaliefert_deploy:dev . && docker run -d -p 80:80 emmaliefert_deploy:dev
+```
+### Development server
 
 If you prefer, running it without Docker, you have to install ionic and then run: 
 ```bash
 ionic serve 
 ```
 
-You can check out the app on `localhost:80`
+You can check out the running app on `localhost:80`
