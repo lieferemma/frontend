@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 import { HttpClientModule } from '@angular/common/http'
 //import { } from '@improbable-eng/grpc-web';
-import { MobileShop, CustomerInterestRequest, Position, OrderRequest, DeliveryPoint, Currency, OrderReply } from '../proto/lieferemma_api_pb';
+import { MobileShop, CustomerInterestRequest, Position, OrderRequest, DeliveryPoint, Currency, OrderReply, AvailableProductRequest } from '../proto/lieferemma_api_pb';
 import { EndCustomer, EndCustomerClient } from '../proto/lieferemma_api_pb_service';
 
 @Injectable({
@@ -11,24 +11,35 @@ import { EndCustomer, EndCustomerClient } from '../proto/lieferemma_api_pb_servi
 })
 export class ApiclientService {
 
-  baseUrl = "https://lieferemma.de/api/"
-  root = {}
-
+  endcustomerclient = new EndCustomerClient("http://localhost:8080")
   constructor() { 
+  }
 
+  public placeOrder() {
 
   }
 
-  // getDeliveryPoints(latidude: Double, longitude: Double): Observable<any> {
-  //   return this.http.get(`${this.url}?s=${encodeURI(title)}&type=${type}&apikey=${this.apiKey}`).pipe(
-  //     map(results => results['Search'])
-  //   );
-  // }
+  public getOrderStatus() {
+    
+  }
 
+  public getAvailableProducts(uuid: string) {
+    var request = new AvailableProductRequest();
+    //request.SetDeliveryPointUuid(uuid);
+    var promise = new Promise((resolve, reject) => {
+      this.endcustomerclient.availableProducts(request, null, function(err, response) {
+        if (err) {
+          reject(response);
+        }  
+        else {
+          resolve(response);
+        }
+      });
+    });
+    return promise;
+  }
 
   public getDeliveryPoints(latitude,longitude) {
-
-    var endcustomerclient = new EndCustomerClient("http://localhost:8080");
 
     var request = new CustomerInterestRequest();
     var pos = new Position();
@@ -39,7 +50,7 @@ export class ApiclientService {
     request.setPositionOfInterest(pos);
 
     var promise = new Promise((resolve, reject) => {
-      var stream = endcustomerclient.registerCustomerInterest(request, null);
+      var stream = this.endcustomerclient.registerCustomerInterest(request, null);
       var mobile_shops = [];
       stream.on('data', function(response) {
         mobile_shops.push(response);
