@@ -6,7 +6,7 @@ import { Http } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { NavigationExtras } from '@angular/router';
 import { Storage } from '@ionic/storage';
-
+import { ApiclientService } from '../../services/apiclient.service';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -22,8 +22,14 @@ export class HomePage {
 
     }
 
+    api = new ApiclientService();
+
+
     ngAfterViewInit() {
     this.plt.ready().then(() => {
+      
+      this.api.getDeliveryPoints();
+
       this.http.get('https://oghuxxw1e6.execute-api.us-east-1.amazonaws.com/dev')
       .pipe(map(res => res.json()))
       .subscribe(stations => this.initMap(stations));
