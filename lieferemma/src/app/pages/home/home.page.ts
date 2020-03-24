@@ -69,14 +69,10 @@ export class HomePage {
 
   showStation(station) {
     let navigationExtras: NavigationExtras = {
-      queryParams: {
-          station: JSON.stringify(station)
+      state: {
+          station: station
       }
     };
-    this.storage.ready().then(() => {
-      this.storage.set("station", station);
-      this.router.navigateByUrl('/order', navigationExtras);
-
-    });
+    this.router.navigateByUrl('/order', navigationExtras);
   }
 }

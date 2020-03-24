@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { stat } from 'fs';
+import { MobileShop } from 'src/app/proto/lieferemma_api_pb';
 
 @Component({
   selector: 'app-order',
@@ -9,10 +11,18 @@ import { Router } from '@angular/router';
 })
 export class OrderPage implements OnInit{
 
-  constructor(public storage: Storage, public router: Router) { }
-  
-  public station = {}
+  station: MobileShop
+  station_title : string
 
+
+  constructor(public storage: Storage, public router: Router) {
+
+    if (this.router.getCurrentNavigation().extras.state) {
+      this.station = this.router.getCurrentNavigation().extras.state.station;
+    }
+
+   }
+  
   public products = [
     {
       "title":"Kaisersemmel",
@@ -44,16 +54,7 @@ export class OrderPage implements OnInit{
   }
 
   ngOnInit() {
-    this.storage.get("station").then( result => {
-      if (!result) {
-      console.log("Failed to load station")
-      } else {
-        var station = result;
-        console.log("Staion is:")
-        this.station = result;
-        this.products = this.products;
-      }
-  })
+      this.station_title = this.station.getTitle();
   }
 
   checkout() {
