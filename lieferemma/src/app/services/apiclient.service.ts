@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { HttpClientModule } from '@angular/common/http'
 //import { } from '@improbable-eng/grpc-web';
-import { MobileShop, CustomerInterestRequest, Position, OrderRequest, DeliveryPoint, Currency } from '../proto/lieferemma_api_pb';
+import { MobileShop, CustomerInterestRequest, Position, OrderRequest, DeliveryPoint, Currency, OrderReply } from '../proto/lieferemma_api_pb';
 import { EndCustomer, EndCustomerClient } from '../proto/lieferemma_api_pb_service';
 
 @Injectable({
@@ -14,51 +16,44 @@ export class ApiclientService {
 
   constructor() { 
 
-  }
-  public getDeliveryPoints() {
 
-    /* just playing around with grpc at the moment */
+  }
+
+  // getDeliveryPoints(latidude: Double, longitude: Double): Observable<any> {
+  //   return this.http.get(`${this.url}?s=${encodeURI(title)}&type=${type}&apikey=${this.apiKey}`).pipe(
+  //     map(results => results['Search'])
+  //   );
+  // }
+
+
+  public getDeliveryPoints(latitude,longitude) {
+
     var endcustomerclient = new EndCustomerClient("http://localhost:8080");
 
     var request = new CustomerInterestRequest();
-    var order_request = new OrderRequest();
     var pos = new Position();
 
-    pos.setLatitude(9.23);
-    pos.setLongitude(58.2);
+    pos.setLatitude(latitude);
+    pos.setLongitude(longitude);
     request.setRadiusInMeter(2000);
     request.setPositionOfInterest(pos);
 
-    var del_point = new DeliveryPoint();
-    del_point.setDeliveryPointUuid("");
-    del_point.setDepartureTime();
-    del_point.setPosition(pos);
-    del_point.setScheduledTime();
-
-    order_request.setShopUuid("123456");
-    order_request.setPickUpPoint(del_point);
-    order_request.setCurrency(Currency.DEFAULT);
-
-  
-     endcustomerclient.placeOrder(order_request, function(err, response) {
-      if (err) {
-        console.log(err.code);
-        console.log(err.message);
-      } else {
-        console.log(response.getOrderId());
-      }
-    });
-
-
-    /*
-    var call = endcustomerclient.registerCustomerInterest();
-    call.on('data', function(MobileShop) {
-      console.log(`${MobileShop} ==> ${MobileShop}`);
+    var promise = new Promise((resolve, reject) => {
+      var stream = endcustomerclient.registerCustomerInterest(request, null);
+      var mobile_shops = [];
+      stream.on('data', function(response) {
+        mobile_shops.push(response);
       });
-      */
-
-
+      stream.on('status', function(status) {
+        console.log(status.code);
+        console.log(status.details);
+        console.log(status.metadata);
+      });
+      stream.on('end', function(end) {
+        resolve(mobile_shops);
+        console.log("Finished getting drop off points");
+      });
+    });
+    return promise;
   }
-
-
 }

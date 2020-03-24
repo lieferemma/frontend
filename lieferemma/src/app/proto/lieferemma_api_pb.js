@@ -1451,8 +1451,8 @@ proto.lieferemma.MobileShop.toObject = function(includeInstance, msg) {
     currentDeliveryPoint: (f = msg.getCurrentDeliveryPoint()) && proto.lieferemma.DeliveryPoint.toObject(includeInstance, f),
     nextDeliveryPoint: (f = msg.getNextDeliveryPoint()) && proto.lieferemma.DeliveryPoint.toObject(includeInstance, f),
     deliveryStatus: jspb.Message.getFieldWithDefault(msg, 8, 0),
-    nextDeliveryPointEta: jspb.Message.getFieldWithDefault(msg, 9, 0),
-    pickUpDeliveryPointEta: jspb.Message.getFieldWithDefault(msg, 10, 0),
+    nextDeliveryPointEta: (f = msg.getNextDeliveryPointEta()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+    pickUpDeliveryPointEta: (f = msg.getPickUpDeliveryPointEta()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
     route: (f = msg.getRoute()) && proto.lieferemma.Route.toObject(includeInstance, f)
   };
 
@@ -1527,11 +1527,13 @@ proto.lieferemma.MobileShop.deserializeBinaryFromReader = function(msg, reader) 
       msg.setDeliveryStatus(value);
       break;
     case 9:
-      var value = /** @type {number} */ (reader.readUint64());
+      var value = new google_protobuf_timestamp_pb.Timestamp;
+      reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
       msg.setNextDeliveryPointEta(value);
       break;
     case 10:
-      var value = /** @type {number} */ (reader.readUint64());
+      var value = new google_protobuf_timestamp_pb.Timestamp;
+      reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
       msg.setPickUpDeliveryPointEta(value);
       break;
     case 11:
@@ -1629,17 +1631,19 @@ proto.lieferemma.MobileShop.serializeBinaryToWriter = function(message, writer) 
     );
   }
   f = message.getNextDeliveryPointEta();
-  if (f !== 0) {
-    writer.writeUint64(
+  if (f != null) {
+    writer.writeMessage(
       9,
-      f
+      f,
+      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
     );
   }
   f = message.getPickUpDeliveryPointEta();
-  if (f !== 0) {
-    writer.writeUint64(
+  if (f != null) {
+    writer.writeMessage(
       10,
-      f
+      f,
+      google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
     );
   }
   f = message.getRoute();
@@ -1874,38 +1878,76 @@ proto.lieferemma.MobileShop.prototype.setDeliveryStatus = function(value) {
 
 
 /**
- * optional uint64 next_delivery_point_eta = 9;
- * @return {number}
+ * optional google.protobuf.Timestamp next_delivery_point_eta = 9;
+ * @return {?proto.google.protobuf.Timestamp}
  */
 proto.lieferemma.MobileShop.prototype.getNextDeliveryPointEta = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
+  return /** @type{?proto.google.protobuf.Timestamp} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 9));
 };
 
 
 /**
- * @param {number} value
+ * @param {?proto.google.protobuf.Timestamp|undefined} value
+ * @return {!proto.lieferemma.MobileShop} returns this
+*/
+proto.lieferemma.MobileShop.prototype.setNextDeliveryPointEta = function(value) {
+  return jspb.Message.setWrapperField(this, 9, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
  * @return {!proto.lieferemma.MobileShop} returns this
  */
-proto.lieferemma.MobileShop.prototype.setNextDeliveryPointEta = function(value) {
-  return jspb.Message.setProto3IntField(this, 9, value);
+proto.lieferemma.MobileShop.prototype.clearNextDeliveryPointEta = function() {
+  return this.setNextDeliveryPointEta(undefined);
 };
 
 
 /**
- * optional uint64 pick_up_delivery_point_eta = 10;
- * @return {number}
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.lieferemma.MobileShop.prototype.hasNextDeliveryPointEta = function() {
+  return jspb.Message.getField(this, 9) != null;
+};
+
+
+/**
+ * optional google.protobuf.Timestamp pick_up_delivery_point_eta = 10;
+ * @return {?proto.google.protobuf.Timestamp}
  */
 proto.lieferemma.MobileShop.prototype.getPickUpDeliveryPointEta = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+  return /** @type{?proto.google.protobuf.Timestamp} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 10));
 };
 
 
 /**
- * @param {number} value
+ * @param {?proto.google.protobuf.Timestamp|undefined} value
+ * @return {!proto.lieferemma.MobileShop} returns this
+*/
+proto.lieferemma.MobileShop.prototype.setPickUpDeliveryPointEta = function(value) {
+  return jspb.Message.setWrapperField(this, 10, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
  * @return {!proto.lieferemma.MobileShop} returns this
  */
-proto.lieferemma.MobileShop.prototype.setPickUpDeliveryPointEta = function(value) {
-  return jspb.Message.setProto3IntField(this, 10, value);
+proto.lieferemma.MobileShop.prototype.clearPickUpDeliveryPointEta = function() {
+  return this.setPickUpDeliveryPointEta(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.lieferemma.MobileShop.prototype.hasPickUpDeliveryPointEta = function() {
+  return jspb.Message.getField(this, 10) != null;
 };
 
 

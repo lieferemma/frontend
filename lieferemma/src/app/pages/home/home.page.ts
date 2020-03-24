@@ -7,6 +7,9 @@ import { map } from 'rxjs/operators';
 import { NavigationExtras } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { ApiclientService } from '../../services/apiclient.service';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { MobileShop } from 'src/app/proto/lieferemma_api_pb';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -18,52 +21,32 @@ export class HomePage {
     public plt: Platform,
     public router: Router,
     public navCtrl: NavController,
-    public storage: Storage) {
+    public storage: Storage,
+    private geolocation: Geolocation) {
 
     }
 
     api = new ApiclientService();
 
-
     ngAfterViewInit() {
     this.plt.ready().then(() => {
-      
-      this.api.getDeliveryPoints();
-
-      this.http.get('https://oghuxxw1e6.execute-api.us-east-1.amazonaws.com/dev')
-      .pipe(map(res => res.json()))
-      .subscribe(stations => this.initMap(stations));
+      this.geolocation.getCurrentPosition().then((data) => {
+        console.log(data.coords.latitude);
+        console.log(data.coords.longitude);
+        this.api.getDeliveryPoints(data.coords.latitude,data.coords.longitude).then(
+          (pickup_shops: MobileShop[]) => this.initMap(data.coords.latitude,data.coords.longitude,pickup_shops)
+        );
+       }).catch((error) => {
+         alert("Error getting location: " +error.message);
+       });
     });
   }
 
-  initMap(stations) {
+  initMap(latitude,longitude,stations: MobileShop[]) {
 
-
-    stations = [
-      {
-        "position": {
-          "lat": 48.775845,
-          "lgn": 9.182932
-        },
-        "title": "Bäckerei Maier"
-      },
-      {
-        "position": {
-          "lat": 48.768320,
-          "lgn": 9.247510
-        },
-        "title": "Aramark"
-      },
-      {
-        "position": {
-          "lat": 48.765020,
-          "lgn": 9.251710
-        },
-        "title": "Restaurant Anam"
-      }
-    ]
-    
-    const map = new Map('map').setView([48.775845, 9.182932], 15);
+    console.log(stations);
+  
+    const map = new Map('map').setView([latitude,longitude], 15);
 
     tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -75,17 +58,15 @@ export class HomePage {
       popupAnchor: [0, -20]
     });
 
-    
-
     stations.forEach((station) => {
-      marker([station.position.lat, station.position.lgn], {icon: customMarkerIcon})
-      .bindPopup(`<b>${station.title}</b>`, { autoClose: false })
+      marker([station.getCurrentPosition().getLatitude(), station.getCurrentPosition().getLongitude()], {icon: customMarkerIcon})
+      .bindPopup(`<b>${station.getTitle()}</b>`, { autoClose: false })
 
       .on('click', () => this.showStation(station))
-      .addTo(map).openPopup();
+      .addTo(map);
     });
-
   }
+
   showStation(station) {
     let navigationExtras: NavigationExtras = {
       queryParams: {
@@ -98,6 +79,4 @@ export class HomePage {
 
     });
   }
-
-
 }
