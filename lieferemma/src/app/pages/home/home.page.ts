@@ -11,6 +11,8 @@ import { MobileShop } from 'src/app/proto/lieferemma_api_pb';
 import { ErrorAlertService} from 'src/app/services/error-alert.service'
 import { AlertController } from '@ionic/angular';
 import { LoadingSpinnerService } from 'src/app/services/loading-spinner.service';
+import { CupertinoPane } from 'cupertino-pane';
+import { stat } from 'fs';
 
 @Component({
   selector: 'app-home',
@@ -22,6 +24,8 @@ export class HomePage {
   error_alert : ErrorAlertService;
   api : ApiclientService;
   loading_spinner: LoadingSpinnerService;
+  info_pane : CupertinoPane;
+  selected_station: MobileShop;
 
   constructor(public http: Http,
     public plt: Platform,
@@ -36,8 +40,20 @@ export class HomePage {
     }
 
     async ngAfterViewInit() {
+
+      this.info_pane = new CupertinoPane('#info_pane', {
+        animationType: "ease-in",
+        bottomClose: true,
+        breaks: {
+          top: { enabled: true, offset: 400 },
+          middle: { enabled: true, offset: 300 },
+          bottom: { enabled: true, offset: 80 },
+      }
+      });
+
       await this.loading_spinner.presentLoading("Lade Emmastationen");
       this.plt.ready().then(() => {
+    
       this.geolocation.getCurrentPosition().then((data) => {
         this.api.getDeliveryPoints(data.coords.latitude,data.coords.longitude).then(
           (pickup_shops: MobileShop[]) => this.initMap(data.coords.latitude,data.coords.longitude,pickup_shops)
@@ -106,9 +122,10 @@ export class HomePage {
     });
     map.addLayer(cluster);
     this.loading_spinner.dismiss();
+
   }
 
-  showStation(station) {
+  show_products(station) {
     let navigationExtras: NavigationExtras = {
       state: {
           station: station
@@ -116,4 +133,12 @@ export class HomePage {
     };
     this.router.navigateByUrl('/order', navigationExtras);
   }
+
+  showStation(station) {
+
+    this.selected_station = station;
+    this.info_pane.present({
+      animate:true
+    })
+}
 }

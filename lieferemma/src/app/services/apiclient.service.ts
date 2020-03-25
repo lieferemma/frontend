@@ -11,7 +11,7 @@ import { EndCustomer, EndCustomerClient } from '../proto/lieferemma_api_pb_servi
 })
 export class ApiclientService {
 
-  endcustomerclient = new EndCustomerClient("http://localhost:8080")
+  endcustomerclient = new EndCustomerClient("http://192.168.178.23:8080")
   constructor() { 
   }
 
