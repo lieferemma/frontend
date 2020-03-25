@@ -39,7 +39,7 @@ export class ApiclientService {
     return promise;
   }
 
-  public getDeliveryPoints(latitude,longitude) {
+  public getDeliveryPoints(latitude,longitude): Promise<any> {
 
     var request = new CustomerInterestRequest();
     var pos = new Position();
@@ -49,22 +49,25 @@ export class ApiclientService {
     request.setRadiusInMeter(2000);
     request.setPositionOfInterest(pos);
 
-    var promise = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       var stream = this.endcustomerclient.registerCustomerInterest(request, null);
       var mobile_shops = [];
       stream.on('data', function(response) {
         mobile_shops.push(response);
       });
       stream.on('status', function(status) {
-        console.log(status.code);
-        console.log(status.details);
-        console.log(status.metadata);
+        if (status.code !== 0) {
+          reject(new Error(status.details));
+        }
       });
       stream.on('end', function(end) {
-        resolve(mobile_shops);
-        console.log("Finished getting drop off points");
+        if (end.code !== 0) {
+          reject(end.details);
+        } else {
+          resolve(mobile_shops);
+          console.log("Finished getting drop off points");
+        }
       });
     });
-    return promise;
   }
 }

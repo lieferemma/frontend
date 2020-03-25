@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Router, ActivatedRoute } from '@angular/router';
-import { stat } from 'fs';
 import { MobileShop } from 'src/app/proto/lieferemma_api_pb';
 
 @Component({
