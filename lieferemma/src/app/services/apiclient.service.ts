@@ -9,7 +9,7 @@ import { EndCustomer, EndCustomerClient } from '../proto/lieferemma_api_pb_servi
 @Injectable({
   providedIn: 'root'
 })
-export class ApiclientService {
+export class ApiClientService {
 
   endcustomerclient = new EndCustomerClient("http://192.168.178.23:8080")
   constructor() { 

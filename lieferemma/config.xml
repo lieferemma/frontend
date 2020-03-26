@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Lieferemma</name>
-    <description></description>
+    <description />
     <author email="info@lieferemma.de" href="http://lieferemma.de/">Lieferemma.de</author>
     <content src="index.html" />
     <access origin="*" />
@@ -102,5 +102,5 @@
     <engine name="browser" spec="~5.0.4" />
     <plugin name="cordova-plugin-geolocation" spec="4.0.2" />
     <plugin name="cordova-plugin-nativegeocoder" spec="3.2.2" />
-
+    <plugin name="cordova-sqlite-storage" spec="5.0.0" />
 </widget>

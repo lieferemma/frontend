@@ -4,7 +4,7 @@ RUN apk add --no-cache git
 
 RUN npm install -g @ionic/cli cordova
 
-COPY ./emmaliefert/ /home/alpine/app/
+COPY ./lieferemma/ /home/alpine/app/
 
 WORKDIR /home/alpine/app/
 

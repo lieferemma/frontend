@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MobileShop } from 'src/app/proto/lieferemma_api_pb';
+import { ApiClientService } from 'src/app/services/apiclient.service';
 
 @Component({
   selector: 'app-order',
@@ -12,12 +13,13 @@ export class OrderPage implements OnInit{
 
   station: MobileShop
   station_title : string
-
+  apiclient: ApiClientService
 
   constructor(public storage: Storage, public router: Router) {
 
     if (this.router.getCurrentNavigation().extras.state) {
       this.station = this.router.getCurrentNavigation().extras.state.station;
+      this.apiclient = this.router.getCurrentNavigation().extras.state.apiclient;
     }
 
    }

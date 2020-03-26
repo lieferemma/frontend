@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/home"></ion-back-button>
+    </ion-buttons> 
+    <ion-title>Meine Bestellungen</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>  
+  <ion-card *ngFor="let order of orders; let i = index" id="{{i}}" class="fastanimation animated fadeInRight fast_delay-{{fast_delay(i)}}">
+    <h3 style="padding-left:1em">Bestellung {{order.orderId}}</h3>
+    <ion-list >
+      <ion-item *ngFor="let item of order['products']">        
+        <ion-avatar slot="start">
+          <img src="{{item.link}}">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{item.title}}</h2>
+          <h3>{{item.price}}</h3>
+          <p class="ion-text-wrap">{{item.description}}</p>
+          <h2>Anzahl: {{item.amount}}</h2>        
+        </ion-label>
+        <h3 item-right>{{amountTimesPrice(item.amount,item.price) | number:'.2-2':'en-DE'}} €</h3>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-item>      
+        <ion-label>
+          <h1>Gesamtkosten:</h1>
+        </ion-label>
+        <h2 slot="end">{{order.total | number:'.2-2':'en-DE'}} €</h2>      
+      </ion-item>
+    </ion-list>
+    
+    <ion-button (click) ="deleteAlertConfirm(i, order.orderId)" expand="block">BESTELLUNG LÖSCHEN</ion-button>
+  </ion-card>
+
+    <ion-card *ngIf="(orders.length == 0)" class="fastanimation animated fadeInRight fast_delay-1500">
+      <ion-card-header>
+        <ion-card-title>Keine Bestellungen gefunden</ion-card-title>
+      </ion-card-header>
+    </ion-card>  
+</ion-content>
+

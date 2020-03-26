@@ -5,14 +5,13 @@ import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import { Http } from '@angular/http';
 import { NavigationExtras } from '@angular/router';
-import { ApiclientService } from '../../services/apiclient.service';
+import { ApiClientService } from '../../services/apiclient.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { MobileShop } from 'src/app/proto/lieferemma_api_pb';
 import { ErrorAlertService} from 'src/app/services/error-alert.service'
 import { AlertController } from '@ionic/angular';
 import { LoadingSpinnerService } from 'src/app/services/loading-spinner.service';
 import { CupertinoPane } from 'cupertino-pane';
-import { stat } from 'fs';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +21,7 @@ import { stat } from 'fs';
 export class HomePage {
 
   error_alert : ErrorAlertService;
-  api : ApiclientService;
+  apiclient : ApiClientService;
   loading_spinner: LoadingSpinnerService;
   info_pane : CupertinoPane;
   selected_station: MobileShop;
@@ -35,7 +34,7 @@ export class HomePage {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController) {
       this.error_alert = new ErrorAlertService(alertCtrl);
-      this.api = new ApiclientService();
+      this.apiclient = new ApiClientService();
       this.loading_spinner = new LoadingSpinnerService(loadingCtrl);
     }
 
@@ -55,7 +54,7 @@ export class HomePage {
       this.plt.ready().then(() => {
     
       this.geolocation.getCurrentPosition().then((data) => {
-        this.api.getDeliveryPoints(data.coords.latitude,data.coords.longitude).then(
+        this.apiclient.getDeliveryPoints(data.coords.latitude,data.coords.longitude).then(
           (pickup_shops: MobileShop[]) => this.initMap(data.coords.latitude,data.coords.longitude,pickup_shops)
         ).catch(e => {
           this.loading_spinner.dismiss();
@@ -128,17 +127,17 @@ export class HomePage {
   show_products(station) {
     let navigationExtras: NavigationExtras = {
       state: {
-          station: station
+          station: station,
+          apiclient: this.apiclient
       }
     };
     this.router.navigateByUrl('/order', navigationExtras);
   }
 
   showStation(station) {
-
     this.selected_station = station;
     this.info_pane.present({
       animate:true
     })
-}
+  }
 }
