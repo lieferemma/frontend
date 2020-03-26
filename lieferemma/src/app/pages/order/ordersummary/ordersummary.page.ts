@@ -52,25 +52,23 @@ export class OrdersummaryPage implements OnInit {
   })
 }
 
-pay(money,shop_ID) {
-
+pay(shop_ID) {
   var payPalConfig = {
     env: 'sandbox',
     client: {
       sandbox: shop_ID,
     },
     commit: false,
-    createOrder: function (data, actions) {
+    createOrder: (data, actions)=> {
       return actions.order.create({
         purchase_units: [{
           amount: {
-            currency: "EUR",
-            value: money
+            currency_code: "EUR",
+            value: this.price
           }
         }]
       });
     },
-
     onApprove: ()=>{
       this.navCtrl.navigateForward(['successmodal']);
     },
