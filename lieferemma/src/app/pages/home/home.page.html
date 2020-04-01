@@ -1,14 +1,19 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-     Emma Stationen
-    </ion-title>
-    <ion-searchbar placeholder="Suchen"></ion-searchbar>
-  </ion-toolbar>
-</ion-header>
+<ion-content fullscreen>
 
-<ion-content>
-  <ion-content>
-    <div id="map" style="height:100%;"></div>
-  </ion-content>
+  <div id="map"></div> 
+  <div id="info_pane" class="overlay">
+    <h1>{{selected_station?.getTitle()}}</h1>
+      <ion-item>
+        
+        <ion-range dualKnobs="true" min="0" max="100" step="3" snaps="true">
+          <ion-label slot="start">{{selected_station?.getCurrentDeliveryPoint().getScheduledTime() || "10:00 Uhr"}}</ion-label>
+            <ion-label slot="end">{{selected_station?.getCurrentDeliveryPoint().getDepartureTime() || "12:00 Uhr"}}</ion-label> 
+
+            </ion-range>
+        
+      </ion-item>
+        <ion-button class="animated fadeInUp" (click) ="show_products(selected_station)"  expand="full">Produkte ansehen</ion-button>    
+    </div>    
+
 </ion-content>
+

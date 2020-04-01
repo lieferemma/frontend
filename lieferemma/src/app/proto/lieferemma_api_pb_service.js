@@ -13,7 +13,7 @@ var EndCustomer = (function () {
 EndCustomer.RegisterCustomerInterest = {
   methodName: "RegisterCustomerInterest",
   service: EndCustomer,
-  requestStream: true,
+  requestStream: false,
   responseStream: true,
   requestType: lieferemma_api_pb.CustomerInterestRequest,
   responseType: lieferemma_api_pb.MobileShop
@@ -53,43 +53,37 @@ function EndCustomerClient(serviceHost, options) {
   this.options = options || {};
 }
 
-EndCustomerClient.prototype.registerCustomerInterest = function registerCustomerInterest(metadata) {
+EndCustomerClient.prototype.registerCustomerInterest = function registerCustomerInterest(requestMessage, metadata) {
   var listeners = {
     data: [],
     end: [],
     status: []
   };
-  var client = grpc.client(EndCustomer.RegisterCustomerInterest, {
+  var client = grpc.invoke(EndCustomer.RegisterCustomerInterest, {
+    request: requestMessage,
     host: this.serviceHost,
     metadata: metadata,
-    transport: this.options.transport
+    transport: this.options.transport,
+    debug: this.options.debug,
+    onMessage: function (responseMessage) {
+      listeners.data.forEach(function (handler) {
+        handler(responseMessage);
+      });
+    },
+    onEnd: function (status, statusMessage, trailers) {
+      listeners.status.forEach(function (handler) {
+        handler({ code: status, details: statusMessage, metadata: trailers });
+      });
+      listeners.end.forEach(function (handler) {
+        handler({ code: status, details: statusMessage, metadata: trailers });
+      });
+      listeners = null;
+    }
   });
-  client.onEnd(function (status, statusMessage, trailers) {
-    listeners.status.forEach(function (handler) {
-      handler({ code: status, details: statusMessage, metadata: trailers });
-    });
-    listeners.end.forEach(function (handler) {
-      handler({ code: status, details: statusMessage, metadata: trailers });
-    });
-    listeners = null;
-  });
-  client.onMessage(function (message) {
-    listeners.data.forEach(function (handler) {
-      handler(message);
-    })
-  });
-  client.start(metadata);
   return {
     on: function (type, handler) {
       listeners[type].push(handler);
       return this;
-    },
-    write: function (requestMessage) {
-      client.send(requestMessage);
-      return this;
-    },
-    end: function () {
-      client.finishSend();
     },
     cancel: function () {
       listeners = null;
@@ -220,7 +214,7 @@ Driver.GetRoute = {
 Driver.SendPosition = {
   methodName: "SendPosition",
   service: Driver,
-  requestStream: true,
+  requestStream: false,
   responseStream: false,
   requestType: lieferemma_api_pb.DriverPosition,
   responseType: lieferemma_api_pb.SendPositionReply
@@ -321,42 +315,32 @@ DriverClient.prototype.getRoute = function getRoute(requestMessage, metadata) {
   };
 };
 
-DriverClient.prototype.sendPosition = function sendPosition(metadata) {
-  var listeners = {
-    end: [],
-    status: []
-  };
-  var client = grpc.client(Driver.SendPosition, {
+DriverClient.prototype.sendPosition = function sendPosition(requestMessage, metadata, callback) {
+  if (arguments.length === 2) {
+    callback = arguments[1];
+  }
+  var client = grpc.unary(Driver.SendPosition, {
+    request: requestMessage,
     host: this.serviceHost,
     metadata: metadata,
-    transport: this.options.transport
-  });
-  client.onEnd(function (status, statusMessage, trailers) {
-    listeners.status.forEach(function (handler) {
-      handler({ code: status, details: statusMessage, metadata: trailers });
-    });
-    listeners.end.forEach(function (handler) {
-      handler({ code: status, details: statusMessage, metadata: trailers });
-    });
-    listeners = null;
+    transport: this.options.transport,
+    debug: this.options.debug,
+    onEnd: function (response) {
+      if (callback) {
+        if (response.status !== grpc.Code.OK) {
+          var err = new Error(response.statusMessage);
+          err.code = response.status;
+          err.metadata = response.trailers;
+          callback(err, null);
+        } else {
+          callback(null, response.message);
+        }
+      }
+    }
   });
   return {
-    on: function (type, handler) {
-      listeners[type].push(handler);
-      return this;
-    },
-    write: function (requestMessage) {
-      if (!client.started) {
-        client.start(metadata);
-      }
-      client.send(requestMessage);
-      return this;
-    },
-    end: function () {
-      client.finishSend();
-    },
     cancel: function () {
-      listeners = null;
+      callback = null;
       client.close();
     }
   };

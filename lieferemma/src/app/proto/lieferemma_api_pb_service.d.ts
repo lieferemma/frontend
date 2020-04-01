@@ -7,7 +7,7 @@ import {grpc} from "@improbable-eng/grpc-web";
 type EndCustomerRegisterCustomerInterest = {
   readonly methodName: string;
   readonly service: typeof EndCustomer;
-  readonly requestStream: true;
+  readonly requestStream: false;
   readonly responseStream: true;
   readonly requestType: typeof lieferemma_api_pb.CustomerInterestRequest;
   readonly responseType: typeof lieferemma_api_pb.MobileShop;
@@ -69,7 +69,7 @@ type DriverGetRoute = {
 type DriverSendPosition = {
   readonly methodName: string;
   readonly service: typeof Driver;
-  readonly requestStream: true;
+  readonly requestStream: false;
   readonly responseStream: false;
   readonly requestType: typeof lieferemma_api_pb.DriverPosition;
   readonly responseType: typeof lieferemma_api_pb.SendPositionReply;
@@ -134,7 +134,7 @@ export class EndCustomerClient {
   readonly serviceHost: string;
 
   constructor(serviceHost: string, options?: grpc.RpcOptions);
-  registerCustomerInterest(metadata?: grpc.Metadata): BidirectionalStream<lieferemma_api_pb.CustomerInterestRequest, lieferemma_api_pb.MobileShop>;
+  registerCustomerInterest(requestMessage: lieferemma_api_pb.CustomerInterestRequest, metadata?: grpc.Metadata): ResponseStream<lieferemma_api_pb.MobileShop>;
   placeOrder(
     requestMessage: lieferemma_api_pb.OrderRequest,
     metadata: grpc.Metadata,
@@ -178,7 +178,15 @@ export class DriverClient {
     callback: (error: ServiceError|null, responseMessage: lieferemma_api_pb.GetOrdersReply|null) => void
   ): UnaryResponse;
   getRoute(requestMessage: lieferemma_api_pb.GetRouteRequest, metadata?: grpc.Metadata): ResponseStream<lieferemma_api_pb.Route>;
-  sendPosition(metadata?: grpc.Metadata): RequestStream<lieferemma_api_pb.DriverPosition>;
+  sendPosition(
+    requestMessage: lieferemma_api_pb.DriverPosition,
+    metadata: grpc.Metadata,
+    callback: (error: ServiceError|null, responseMessage: lieferemma_api_pb.SendPositionReply|null) => void
+  ): UnaryResponse;
+  sendPosition(
+    requestMessage: lieferemma_api_pb.DriverPosition,
+    callback: (error: ServiceError|null, responseMessage: lieferemma_api_pb.SendPositionReply|null) => void
+  ): UnaryResponse;
   confirmOrderDelivery(
     requestMessage: lieferemma_api_pb.ConfirmOrderDeliveryRequest,
     metadata: grpc.Metadata,

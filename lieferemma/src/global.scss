@@ -25,7 +25,9 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 @import '~animate.css/animate.min.css';
-
+@import 'https://unpkg.com/leaflet@1.4.0/dist/leaflet.css';
+@import 'assets/css/MarkerCluster.css';
+@import 'assets/css/MarkerCluster.Default.css';
 * {
     color: #2D3E50;
 }

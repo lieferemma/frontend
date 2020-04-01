@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { HomePage } from './home.page';
-import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   imports: [
@@ -13,7 +12,6 @@ import { IonicStorageModule } from '@ionic/storage';
     FormsModule,
     IonicModule,
     HttpClientModule,
-    IonicStorageModule.forRoot(),
     RouterModule.forChild([
       {
         path: '',

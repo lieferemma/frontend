@@ -157,11 +157,15 @@ export class MobileShop extends jspb.Message {
   getDeliveryStatus(): DeliveryStatusMap[keyof DeliveryStatusMap];
   setDeliveryStatus(value: DeliveryStatusMap[keyof DeliveryStatusMap]): void;
 
-  getNextDeliveryPointEta(): number;
-  setNextDeliveryPointEta(value: number): void;
+  hasNextDeliveryPointEta(): boolean;
+  clearNextDeliveryPointEta(): void;
+  getNextDeliveryPointEta(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setNextDeliveryPointEta(value?: google_protobuf_timestamp_pb.Timestamp): void;
 
-  getPickUpDeliveryPointEta(): number;
-  setPickUpDeliveryPointEta(value: number): void;
+  hasPickUpDeliveryPointEta(): boolean;
+  clearPickUpDeliveryPointEta(): void;
+  getPickUpDeliveryPointEta(): google_protobuf_timestamp_pb.Timestamp | undefined;
+  setPickUpDeliveryPointEta(value?: google_protobuf_timestamp_pb.Timestamp): void;
 
   hasRoute(): boolean;
   clearRoute(): void;
@@ -188,8 +192,8 @@ export namespace MobileShop {
     currentDeliveryPoint?: DeliveryPoint.AsObject,
     nextDeliveryPoint?: DeliveryPoint.AsObject,
     deliveryStatus: DeliveryStatusMap[keyof DeliveryStatusMap],
-    nextDeliveryPointEta: number,
-    pickUpDeliveryPointEta: number,
+    nextDeliveryPointEta?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+    pickUpDeliveryPointEta?: google_protobuf_timestamp_pb.Timestamp.AsObject,
     route?: Route.AsObject,
   }
 }

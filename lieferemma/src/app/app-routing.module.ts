@@ -5,11 +5,11 @@ const routes: Routes = [
   { path: '', loadChildren: () => import('./pages/index/index.module').then( m => m.IndexPageModule)},
   {
     path: 'order',
-    loadChildren: () => import('./pages/order/order.module').then( m => m.OrderPageModule)
+    loadChildren: () => import('./pages/order/order/order.module').then( m => m.OrderPageModule)
   },
   {
     path: 'ordersummary',
-    loadChildren: () => import('./pages/ordersummary/ordersummary.module').then( m => m.OrdersummaryPageModule)
+    loadChildren: () => import('./pages/order/ordersummary/ordersummary.module').then( m => m.OrdersummaryPageModule)
   },
   {
     path: 'trackorder',
@@ -46,6 +46,10 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'myorders',
+    loadChildren: () => import('./pages/order/myorders/myorders.module').then( m => m.MyordersPageModule)
   }
 ];
 

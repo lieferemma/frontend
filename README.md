@@ -22,7 +22,7 @@ The following chart shows the customer journey of the driver role.
 
 ![Driver Journey](./res/driver_journey.png "Driver Journey")
 
-## Develop / Contribute
+## Run locally
 
 The project contains of two dockerfiles. One for building the app. The other for providing an image to deploy as static web app. 
 ### Deploy with Docker
@@ -43,3 +43,9 @@ ionic serve
 ```
 
 You can check out the running app on `localhost:80`
+
+## Contribute
+
+We are organizing ourselves with plain Github Issues. You can find them here: 
+
+For further discussions, we have a [![Discord](https://img.shields.io/discord/692016139697651722)](https://discord.gg/rWWpxYG).
