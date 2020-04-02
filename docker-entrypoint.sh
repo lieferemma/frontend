@@ -1,5 +1,5 @@
 #!/bin/sh
 
-ionic build
+ionic build --prod --release
 
 cp -r /home/alpine/app/www/* /home/alpine/app/build/

@@ -1,5 +1,11 @@
 # Frontend
 
+![MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+![CI](https://github.com/lieferemma/frontend/workflows/CI/badge.svg)
+[![](https://img.shields.io/docker/image-size/lieferemma/frontend)](https://hub.docker.com/r/lieferemma/frontend)
+[![](https://img.shields.io/discord/692016139697651722)](https://discord.gg/rWWpxYG)
+[![](https://img.shields.io/badge/%20-Buy%20me%20a%20coffee-orange?logo=buy-me-a-coffee&logoColor=white)](https://www.buymeacoffee.com/strobsi)
+
 This project contains the frontend of `LIEFEREMMA`. The frontend is divided into two parts. 
 
 ## Customer 
@@ -22,10 +28,15 @@ The following chart shows the customer journey of the driver role.
 
 ![Driver Journey](./res/driver_journey.png "Driver Journey")
 
-## Run locally
+## Getting started
+
+To run the image, you can just use the already compiled docker image: 
+```
+docker run -d -p 80:80 lieferemma/frontend
+```
 
 The project contains of two dockerfiles. One for building the app. The other for providing an image to deploy as static web app. 
-### Deploy with Docker
+### Build form source
 
 1. Build app
 ```bash
