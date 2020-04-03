@@ -9,17 +9,30 @@ import { Router, RouterEvent } from '@angular/router';
 export class MenuPage implements OnInit {
 
   pages = [
-    {
+    { 
       title: "Home",
       url: "/menu/home"
+    },
+    {
+      title: "Meine Bestellungen",
+      url: "/menu/myorders"
+    },
+    {
+      title: "Datenschutz",
+      url: "/menu/dsgvo"
+    },
+    {
+      title: "Impressum",
+      url: "/menu/impressum"
     }
   ]
-
   selectedPath = "";
 
   constructor(private router: Router) { 
     this.router.events.subscribe((event: RouterEvent) => {
+      if (event && event.url) {
         this.selectedPath = event.url;
+      }
     });
   }
 
