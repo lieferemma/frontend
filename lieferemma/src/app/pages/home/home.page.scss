@@ -18,3 +18,13 @@ ion-button {
     margin-top:20px;
     padding: 0px;
 }
+
+ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+    border: 0px;
+}
+
+ion-header::after {
+    background-image: none;
+}

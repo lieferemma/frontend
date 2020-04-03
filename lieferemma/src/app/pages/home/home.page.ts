@@ -63,7 +63,7 @@ export class HomePage {
               alert.onDidDismiss().then(
                   (data) => {
                       console.log("Reload page")
-                      location.reload();
+                      //location.reload();
                   }
               )
             }
@@ -92,7 +92,9 @@ export class HomePage {
 
     console.log(stations);
   
-    const map = new L.Map('map').setView([latitude,longitude], 15);
+    const map = new L.Map('map',{
+      zoomControl:false
+    }).setView([latitude,longitude], 15);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
