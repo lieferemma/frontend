@@ -7,44 +7,45 @@ jobs:
     name: Build Ionic App
     runs-on: ubuntu-latest
     steps:
-    - name: Use coturiv/setup-ionic
-      uses: coturiv/setup-ionic@v1
-      with:
-        cordova-version: 8
-    - uses: actions/checkout@v2
-      with:
+      - name: Use coturiv/setup-ionic
+        uses: coturiv/setup-ionic@v1
+        with:
+          cordova-version: 8
+      - uses: actions/checkout@v2
+        with:
           submodules: true
-    - name: Build App
-      run: |
-        cd lieferemma
-        rm ./package-lock.json
-        npm install npm-force-resolutions --save-dev
-        npm install
-        npx npm-force-resolutions
-        npm install
-        mkdir ../build
-        ionic build --prod --release
-        mv www/* ../build/
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v1
-      with:
-        name: build
-        path: build
+      - name: Build App
+        run: |
+          cd lieferemma
+          rm ./package-lock.json
+          # Fixes https://stackoverflow.com/questions/60780664/could-not-find-plugin-proposal-numeric-separator
+          npm install npm-force-resolutions --save-dev
+          npm install
+          npx npm-force-resolutions
+          npm install
+          mkdir ../build
+          ionic build --prod --release
+          mv www/* ../build/
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: build
+          path: build
   deploy:
     name: DockerHub Deployment
     needs: build-app
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
+      - uses: actions/checkout@v2
+        with:
           submodules: true
-    - name: Download build artifacts
-      uses: actions/download-artifact@v1
-      with:
-        name: build
-    - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@master
-      with:
-        name: lieferemma/frontend
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Download build artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: build
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: lieferemma/frontend
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
