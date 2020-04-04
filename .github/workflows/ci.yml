@@ -23,14 +23,12 @@ jobs:
           npm install
           npx npm-force-resolutions
           npm install
-          mkdir ../build
           ionic build --prod --release
-          mv www/* ../build/
       - name: Upload build artifacts
         uses: actions/upload-artifact@v1
         with:
           name: build
-          path: build
+          path: lieferemma/www
   deploy:
     name: DockerHub Deployment
     needs: build-app
