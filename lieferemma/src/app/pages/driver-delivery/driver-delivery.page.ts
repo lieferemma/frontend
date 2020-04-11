@@ -14,8 +14,6 @@ export class DriverDeliveryPage implements OnInit {
       },
       "title": "Bäckerei Maier"
     }
-
-    
   price = 0;
   route = { 
     "route_uuid":"32131esajapdjpsjfea",
@@ -154,9 +152,7 @@ export class DriverDeliveryPage implements OnInit {
     ],
     route_points: []
   }
-  delivery = {
-    orders: []
-  }
+  delivery : any 
   orders = [
     {
       "orderId": 1,

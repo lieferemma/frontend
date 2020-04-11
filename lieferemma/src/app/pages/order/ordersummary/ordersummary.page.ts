@@ -16,7 +16,7 @@ export class OrdersummaryPage implements OnInit {
 
   constructor(public navCtrl: NavController, public storage: Storage, public router: Router) {   }
 
-  station = {} 
+  station : any
   price = 0
   products = []
 

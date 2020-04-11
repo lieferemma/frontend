@@ -8,7 +8,6 @@ COPY ./lieferemma/ /home/alpine/app/
 
 WORKDIR /home/alpine/app/
 
-RUN ls -ahl
 RUN rm ./package-lock.json
 # Fix for bug with proposal-numeric-separator plugin
 RUN npm install npm-force-resolutions --save-dev
