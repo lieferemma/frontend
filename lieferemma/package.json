@@ -40,7 +40,7 @@
     "@types/leaflet.markercluster": "^1.4.2",
     "again": "0.0.1",
     "animate.css": "^3.7.2",
-    "cordova-browser": "5.0.4",
+    "cordova-browser": "6.0.0",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-geolocation": "4.0.2",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
